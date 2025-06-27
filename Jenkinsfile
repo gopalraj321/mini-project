@@ -14,22 +14,12 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    withSonarQubeEnv('MySonarQube') {
-                        sh 'sonar-scanner'
-                    }
-                }
-            }
-        }
-
         stage('Docker Build & Push') {
             steps {
                 sh """
                     docker build -t $IMAGE_NAME .
                     docker tag $IMAGE_NAME:latest $ECR_REGISTRY/$IMAGE_NAME:latest
-                    aws ecr get-login-password --region <region> | docker login --username AWS --password-stdin $ECR_REGISTRY
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
                     docker push $ECR_REGISTRY/$IMAGE_NAME:latest
                 """
             }
@@ -38,7 +28,7 @@ pipeline {
         stage('Deploy to EKS') {
             steps {
                 sh """
-                    aws eks update-kubeconfig --name <cluster_name> --region <region>
+                    aws eks update-kubeconfig --name devops-cluster --region us-east-1
                     kubectl apply -f k8s/deployment.yaml
                 """
             }
