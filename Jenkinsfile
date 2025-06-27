@@ -17,7 +17,7 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 sh """
-                    docker build -t $IMAGE_NAME .
+                    docker build -t $IMAGE_NAME ./app
                     docker tag $IMAGE_NAME:latest $ECR_REGISTRY/$IMAGE_NAME:latest
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
                     docker push $ECR_REGISTRY/$IMAGE_NAME:latest
