@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-mini-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-mini-app
+  template:
+    metadata:
+      labels:
+        app: devops-mini-app
+    spec:
+      containers:
+      - name: devops-mini-app
+        image: <your_ecr_repo>/devops-mini-app:latest
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: devops-mini-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: devops-mini-app
+  ports:
+    - port: 80
+      targetPort: 3000
