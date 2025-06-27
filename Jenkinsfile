@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git url: 'https://github.com/yourname/devops-mini-project.git'
+                git url: 'https://github.com/gopalraj321/mini-project.git'
             }
         }
 
