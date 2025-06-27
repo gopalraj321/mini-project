@@ -16,7 +16,7 @@ pipeline {
 
         stage('Docker Build & Push') {
             steps {
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-ecr-credentials']]) {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-creds']]) {
                     sh """
                         docker build -t $IMAGE_NAME ./app
                         docker tag $IMAGE_NAME:latest $ECR_REGISTRY/$IMAGE_NAME:latest
