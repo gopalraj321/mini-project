@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "devops-mini-app"
-        ECR_REGISTRY = "<your_account_id>.dkr.ecr.<region>.amazonaws.com"
+        ECR_REGISTRY = "796973491290.dkr.ecr.us-east-1.amazonaws.com"
     }
 
     stages {
